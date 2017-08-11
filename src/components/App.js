@@ -22,16 +22,17 @@ class App extends Component {
       pictures: [],
       loading: false,
       value: '',
-      index: 1
+      index: 1,
+      loader: false
     };
     this.handleChange = this.handleChange.bind(this);
-    this._handleWaypointEnter = this._handleWaypointEnter.bind(this);
+    this.handleWaypointEnter = this.handleWaypointEnter.bind(this);
+    this.handleWaypointLeave = this.handleWaypointLeave.bind(this);
     this.updateResults = this.updateResults.bind(this);
   }
 
   // Search box triggers API call
   handleChange(evt) {
-    clearTimeout(timer);
     const value = evt.target.value;
 
     // Clear current pictures, set search value
@@ -42,33 +43,49 @@ class App extends Component {
     });
 
     // Wait for typing to finish before running search
-    timer = setTimeout(this.updateResults(value), 500);
+    this.updateResults(value);
   }
 
   updateResults(value) {
-    //Show loader if input has value
-    this.setState({
-      loading: value.length
-    });
-    // Only serach if there's something in the input box
-    if (value.length > 0) {
-      // API Call for search
-      unsplash.search.photos(value, this.state.index, 20).then(toJson).then(json => {
-        // Remove loader, set pictures
-        console.log(this.state.index);
-        this.setState({
-          loading: false,
-          pictures: json.results,
-          index: this.state.index + 1
-        });
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      //Show loader if input has value
+      this.setState({
+        loading: value.length
       });
-    }
+      // Only serach if there's something in the input box
+      if (value.length > 0) {
+        // API Call for search
+        unsplash.search.photos(value, this.state.index, 20).then(toJson).then(json => {
+          // Remove loader, set pictures
+          console.log(this.state.index);
+          this.setState({
+            loading: false,
+            pictures: json.results,
+            index: this.state.index + 1
+          });
+        });
+      }
+    }, 500);
   }
 
-  _handleWaypointEnter() {
+  handleWaypointEnter() {
     // TODO: figure out the index thing
-    console.log(this.state.index);
-    // this.updateResults();
+    console.log('test');
+    if (!this.state.loader) {
+      console.log('enter');
+      this.updateResults(this.state.value);
+    }
+    this.setState({
+      loader: true
+    });
+  }
+
+  handleWaypointLeave() {
+    console.log('leave');
+    this.setState({
+      loader: false
+    });
   }
 
   render() {
@@ -79,7 +96,7 @@ class App extends Component {
         </div>
 
         <Results pictures={this.state.pictures} value={this.state.value} loading={this.state.loading} />
-        <Waypoint onEnter={this._handleWaypointEnter} />
+        <Waypoint onEnter={this.handleWaypointEnter} onLeave={this.handleWaypointLeave} />
       </div>
     );
   }
