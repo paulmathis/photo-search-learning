@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Unsplash, { toJson } from 'unsplash-js';
 import sample from '../json/sample.json';
 import Results from './Results';
-import './App.css';
 import secret from '../json/secret.json';
 
 // Unsplash API info
@@ -58,7 +57,7 @@ class App extends Component {
     return (
       <div>
         <input onChange={this.handleChange} />
-        <Results pictures={this.state.pictures} value={this.state.value} loading={this.state.loading} />
+        <Results pictures={sample.results} value={this.state.value} loading={this.state.loading} />
       </div>
     );
   }

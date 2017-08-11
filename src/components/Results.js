@@ -1,9 +1,10 @@
 import React from 'react';
 import PhotoBox from './PhotoBox';
+import '../styles/Result.css';
 
 const Results = props => {
   return (
-    <div className="searchResult">
+    <div className="results">
       {props.pictures.map(picture => {
         return <PhotoBox src={picture.urls.small} />;
       })}
