@@ -1164,6 +1164,10 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
+bulma@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.5.1.tgz#db2831c94afe732250c7b12527a7b792a4dc9ef8"
+
 bytes@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.5.0.tgz#4c9423ea2d252c270c41b2bdefeff9bb6b62c06a"
@@ -1463,6 +1467,10 @@ console-browserify@^1.1.0:
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
+
+consolidated-events@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/consolidated-events/-/consolidated-events-1.1.0.tgz#2ee7aa59c2b346e00c58d324433ace3c47129221"
 
 constants-browserify@^1.0.0:
   version "1.0.0"
@@ -4879,7 +4887,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10:
+prop-types@^15.0.0, prop-types@^15.5.10:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -5066,6 +5074,13 @@ react-scripts@1.0.11:
     whatwg-fetch "2.0.3"
   optionalDependencies:
     fsevents "1.1.2"
+
+react-waypoint@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/react-waypoint/-/react-waypoint-7.0.4.tgz#d46ecc08fd1f7ee5d782ba47bf5c87aa407e7318"
+  dependencies:
+    consolidated-events "^1.1.0"
+    prop-types "^15.0.0"
 
 react@^15.6.1:
   version "15.6.1"

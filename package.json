@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bulma": "^0.5.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-waypoint": "^7.0.4",
     "unsplash-js": "^4.6.0"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Unsplash, { toJson } from 'unsplash-js';
+import Waypoint from 'react-waypoint';
 import sample from '../json/sample.json';
 import Results from './Results';
 import secret from '../json/secret.json';
@@ -20,9 +21,12 @@ class App extends Component {
     this.state = {
       pictures: [],
       loading: false,
-      value: ''
+      value: '',
+      index: 1
     };
     this.handleChange = this.handleChange.bind(this);
+    this._handleWaypointEnter = this._handleWaypointEnter.bind(this);
+    this.updateResults = this.updateResults.bind(this);
   }
 
   // Search box triggers API call
@@ -30,34 +34,52 @@ class App extends Component {
     clearTimeout(timer);
     const value = evt.target.value;
 
-    // Wait for typing to finish before running search
-    timer = setTimeout(() => {
-      // Clear current pictures, show loader if input has value, set search value
-      this.setState({
-        pictures: [],
-        loading: value.length,
-        value: value
-      });
+    // Clear current pictures, set search value
+    this.setState({
+      pictures: [],
+      value: value,
+      index: 1
+    });
 
-      // Only serach if there's something in the input box
-      if (value.length > 0) {
-        // API Call for search
-        unsplash.search.photos(value, 1, 20).then(toJson).then(json => {
-          // Remove loader, set pictures
-          this.setState({
-            loading: false,
-            pictures: json.results
-          });
+    // Wait for typing to finish before running search
+    timer = setTimeout(this.updateResults(value), 500);
+  }
+
+  updateResults(value) {
+    //Show loader if input has value
+    this.setState({
+      loading: value.length
+    });
+    // Only serach if there's something in the input box
+    if (value.length > 0) {
+      // API Call for search
+      unsplash.search.photos(value, this.state.index, 20).then(toJson).then(json => {
+        // Remove loader, set pictures
+        console.log(this.state.index);
+        this.setState({
+          loading: false,
+          pictures: json.results,
+          index: this.state.index + 1
         });
-      }
-    }, 500);
+      });
+    }
+  }
+
+  _handleWaypointEnter() {
+    // TODO: figure out the index thing
+    console.log(this.state.index);
+    // this.updateResults();
   }
 
   render() {
     return (
-      <div>
-        <input onChange={this.handleChange} />
-        <Results pictures={sample.results} value={this.state.value} loading={this.state.loading} />
+      <div className="container">
+        <div className="control">
+          <input className="input" onChange={this.handleChange} />
+        </div>
+
+        <Results pictures={this.state.pictures} value={this.state.value} loading={this.state.loading} />
+        <Waypoint onEnter={this._handleWaypointEnter} />
       </div>
     );
   }

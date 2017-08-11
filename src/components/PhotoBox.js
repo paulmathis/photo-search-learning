@@ -4,7 +4,7 @@ import '../styles/PhotoBox.css';
 const PhotoBox = props => {
   return (
     <div className="photo-box">
-      <img src={props.src} alt="Search Result" />
+      <img className="" src={props.src} alt="Search Result" />
     </div>
   );
 };
