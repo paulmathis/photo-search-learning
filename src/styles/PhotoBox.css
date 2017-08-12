@@ -1,11 +1,19 @@
-/* .photo-box {
-  width: 100%;
-} */
+.photo-box {
+  background-size: cover;
+  margin-bottom: 5px;
+}
 
-/* .photo-box img {
-  height: auto;
-  width: 450px;
-  max-width: 100%;
-  max-height: 225px;
-  object-fit: cover;
-} */
+.photo-box img {
+  visibility: hidden;
+}
+
+.hoverWrapper {
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(121, 121, 121, 0.5));
+}
+
+.photo-box h4 {
+  color: white;
+  position: relative;
+  left: 10px;
+  bottom: 10px;
+}

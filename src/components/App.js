@@ -4,6 +4,8 @@ import Waypoint from 'react-waypoint';
 import sample from '../json/sample.json';
 import Results from './Results';
 import secret from '../json/secret.json';
+import Search from './Search';
+import '../styles/App.css';
 
 // Unsplash API info
 const unsplash = new Unsplash({
@@ -23,11 +25,11 @@ class App extends Component {
       loading: false,
       value: '',
       index: 1,
-      loader: false
+      loader: false,
+      total: 1
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleWaypointEnter = this.handleWaypointEnter.bind(this);
-    this.handleWaypointLeave = this.handleWaypointLeave.bind(this);
     this.updateResults = this.updateResults.bind(this);
   }
 
@@ -39,7 +41,8 @@ class App extends Component {
     this.setState({
       pictures: [],
       value: value,
-      index: 1
+      index: 1,
+      total: 1
     });
 
     // Wait for typing to finish before running search
@@ -49,20 +52,21 @@ class App extends Component {
   updateResults(value) {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      //Show loader if input has value
+      //Show loader if input has value and there are pages left
       this.setState({
-        loading: value.length
+        loading: value.length && this.state.index <= this.state.total
       });
       // Only serach if there's something in the input box
-      if (value.length > 0) {
+      if (value.length > 0 && this.state.index <= this.state.total) {
         // API Call for search
-        unsplash.search.photos(value, this.state.index, 20).then(toJson).then(json => {
+        unsplash.search.photos(value, this.state.index, 30).then(toJson).then(json => {
           // Remove loader, set pictures
-          console.log(this.state.index);
+          let tempArr = [...this.state.pictures, ...json.results];
           this.setState({
             loading: false,
-            pictures: json.results,
-            index: this.state.index + 1
+            pictures: tempArr,
+            index: this.state.index + 1,
+            total: json.total_pages
           });
         });
       }
@@ -70,31 +74,16 @@ class App extends Component {
   }
 
   handleWaypointEnter() {
-    // TODO: figure out the index thing
-    console.log('test');
+    // When reaching the bottom of page, if there are more results keep searching
     if (!this.state.loader) {
-      console.log('enter');
       this.updateResults(this.state.value);
     }
-    this.setState({
-      loader: true
-    });
-  }
-
-  handleWaypointLeave() {
-    console.log('leave');
-    this.setState({
-      loader: false
-    });
   }
 
   render() {
     return (
       <div className="container">
-        <div className="control">
-          <input className="input" onChange={this.handleChange} />
-        </div>
-
+        <Search value={this.state.value} onChange={this.handleChange} />
         <Results pictures={this.state.pictures} value={this.state.value} loading={this.state.loading} />
         <Waypoint onEnter={this.handleWaypointEnter} onLeave={this.handleWaypointLeave} />
       </div>

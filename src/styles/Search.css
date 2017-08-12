@@ -1,0 +1,17 @@
+.search {
+  display: flex;
+  justify-content: center;
+  /* margin: 10px; */
+  width: 100%;
+  margin-top: calc(50vh - 36px);
+  transition: .4s ease-out;
+}
+
+.search input {
+  max-width: 600px;
+  margin-bottom: 5px;
+}
+
+.transistion {
+  margin-top: 0px;
+}

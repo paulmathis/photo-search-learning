@@ -1,6 +1,10 @@
 .results {
   display: grid;
   width: 100%;
-  min-height: 102vh;
-  /* margin-bottom: 10em; */
+  /* min-height: 102vh; */
+  margin-bottom: 12rem;
+}
+
+.results > .content {
+  margin-top: 10rem;
 }
